@@ -1,0 +1,22 @@
+# Private configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+# Local runtime data, models and generated text
+.local/
+keyboard_marketing_db/
+**/keyboard_marketing_db/
+**/.local/
+**/__pycache__/
+*.py[cod]
+.venv/
+venv/
+node_modules/
+*.log
+marketing_copy.txt
+*.mp4
+*.zip
+.DS_Store
+Thumbs.db

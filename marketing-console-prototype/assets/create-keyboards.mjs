@@ -1,0 +1,18 @@
+// Original local concept artwork. No real brand assets, photos or model output.
+import {writeFileSync} from 'node:fs';
+const palettes={graphite:{body:'#373e48',edge:'#20262f',key:'#535d69',light:'#78838d',legend:'#e8eee9',accent:'#ccdd79',bg:'#e4eadf'},cloud:{body:'#d5dad6',edge:'#a1ada6',key:'#f0f2e8',light:'#ffffff',legend:'#4f6058',accent:'#aec476',bg:'#edf0e5'},moss:{body:'#61776c',edge:'#3e564b',key:'#9eaea1',light:'#c4d0bf',legend:'#283e32',accent:'#e2dea8',bg:'#e1e9df'}};
+const rows=[
+  [['Esc',1.2,1],['F1',1],['F2',1],['F3',1],['F4',1],['F5',1],['F6',1],['F7',1],['F8',1],['F9',1],['F10',1],['F11',1],['F12',1],['Del',1],['●',1.3,1]],
+  [['`',1],['1',1],['2',1],['3',1],['4',1],['5',1],['6',1],['7',1],['8',1],['9',1],['0',1],['−',1],['=',1],['Back',2],['Home',1]],
+  [['Tab',1.5],['Q',1],['W',1],['E',1],['R',1],['T',1],['Y',1],['U',1],['I',1],['O',1],['P',1],['[',1],[']',1],['\\',1.5],['PgUp',1]],
+  [['Caps',1.75],['A',1],['S',1],['D',1],['F',1],['G',1],['H',1],['J',1],['K',1],['L',1],[';',1],["'",1],['Enter',2.25,1],['PgDn',1]],
+  [['Shift',2.25],['Z',1],['X',1],['C',1],['V',1],['B',1],['N',1],['M',1],[',',1],['.',1],['/',1],['Shift',1.75],['↑',1,1],['End',1]],
+  [['Ctrl',1.25],['Win',1.25],['Alt',1.25],['',6.25],['Alt',1],['Fn',1],['Ctrl',1],['←',1],['↓',1],['→',1]]
+];
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+for(const [name,p] of Object.entries(palettes)){
+  let keys='';rows.forEach((row,r)=>{let x=37;const y=r?60+(r-1)*44:24,h=r?35:24;for(const [label,u,accent] of row){const w=u*40-5;keys+=`<g><rect x="${x}" y="${y+4}" width="${w}" height="${h}" rx="5" fill="${p.edge}" opacity=".8"/><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="5" fill="${accent?p.accent:p.key}" stroke="${p.light}" stroke-opacity=".42"/><path d="M${x+5} ${y+3}h${Math.max(0,w-10)}" stroke="white" opacity=".2"/><text x="${x+8}" y="${y+(r?17:15)}" font-family="Arial,sans-serif" font-size="${label.length>3?7:9}" fill="${accent?'#394433':p.legend}" opacity=".88">${esc(label)}</text></g>`;x+=u*40;}});
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" viewBox="0 0 1000 560" role="img" aria-labelledby="title desc"><title id="title">Vela K75 · ${name} concept keyboard</title><desc id="desc">Original fictional 75 percent mechanical keyboard illustration. Colour, specifications and product are demonstration concepts.</desc><defs><linearGradient id="case" x2="0" y2="1"><stop stop-color="${p.light}"/><stop offset=".08" stop-color="${p.body}"/><stop offset="1" stop-color="${p.body}"/></linearGradient><linearGradient id="edge" x2="0" y2="1"><stop stop-color="${p.body}"/><stop offset="1" stop-color="${p.edge}"/></linearGradient><filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feGaussianBlur stdDeviation="15"/></filter></defs><ellipse cx="490" cy="447" rx="355" ry="32" fill="#263b31" opacity=".15" filter="url(#shadow)"/><g transform="translate(120 129) rotate(-9 370 150)"><rect x="-3" y="22" width="744" height="307" rx="27" fill="url(#edge)"/><rect width="738" height="302" rx="24" fill="url(#case)" stroke="${p.light}" stroke-width="2"/><rect x="19" y="12" width="700" height="279" rx="12" fill="${p.edge}" opacity=".28"/>${keys}<text x="663" y="290" font-family="Arial,sans-serif" font-size="7" letter-spacing="2" fill="${p.legend}" opacity=".7">VELA K75</text><rect x="301" y="-4" width="43" height="7" rx="3" fill="${p.edge}"/><path d="M18 317H718" stroke="${p.light}" opacity=".25" stroke-width="2"/></g></svg>`;
+  writeFileSync(new URL(`keyboard-${name}.svg`,import.meta.url),svg);
+}
+console.log('Three original, local Vela K75 concept illustrations created.');
