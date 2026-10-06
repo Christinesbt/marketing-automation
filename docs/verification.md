@@ -79,4 +79,19 @@
 
 ![English capability boundaries](screenshots/about-demo.jpg)
 
-Public deployment verification is appended only after the actual Pages deployment succeeds.
+## Public Deployment Verification — 6 October 2026
+
+**Live URL:** [Relay Marketing Workspace](https://christinesbt.github.io/marketing-automation/).
+
+Implementation commit: `b109176dc406e566dc28b0f460531772d4316072`. [Actions run 37441432843](https://github.com/Christinesbt/marketing-automation/actions/runs/37441432843), attempt 2, completed with both build and deploy successful. The first attempt passed checks, all 19 tests and packaging, then stopped because Pages was still disabled. After selecting GitHub Actions as the existing repository's publishing source, the normal rerun succeeded. No additional OAuth grant, custom credential, paid subscription or repository visibility change was needed.
+
+- The public base URL returned **HTTP 200**. All ten frontend files and `build-info.json` returned 200. Each frontend asset's SHA-256 matched both its published manifest and its exact Git source blob. The manifest commit matched the deployed source commit.
+- The 12-file artifact includes a `.nojekyll` build marker; Pages hides that marker from HTTP (404). Server, Python, documentation, test and `.env` paths were also checked and returned 404.
+- Chrome exercised public new-campaign required validation and duplicate-submit protection, preparation refresh/resume under the repository hash route, preview, human approval, repeated run start, run refresh/resume, reconciliation before safe retry, repeated retry and backoff refresh. The same stable run completed with **860 acknowledged / 0 failed / 0 uncertain / 0 queued**. These are scripted browser records, not emails.
+- Public overview, brief, preparation, review, Review Queue, Execution Log, Capabilities, Blog, listing and About rendered without CJK text; accessibility labels, placeholders, titles and input values were included in the scan. Product artwork loaded. Browser error/warning logs were empty after the site was live.
+- The public capability layout was also checked at 375×812: content width and scroll width were both 360. The temporary override was removed. The public test workspace was reset through the UI to three seed campaigns and refreshed; the user's local preview retained its existing four campaigns and in-progress walkthrough.
+- GitHub emitted informational Node.js 20 deprecation warnings for the official configure/deploy action versions and ran them on Node.js 24. They did not prevent successful deployment. Frontend Node.js checks and tests ran on Node.js 24.
+
+The live [build-info.json](https://christinesbt.github.io/marketing-automation/build-info.json) remains the authoritative deployed commit marker after subsequent documentation-only commits.
+
+![Actual public English preview](screenshots/public-preview.jpg)

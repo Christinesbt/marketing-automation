@@ -1,5 +1,7 @@
 # Relay · Marketing Automation
 
+**Live English demo:** [Relay Marketing Workspace](https://christinesbt.github.io/marketing-automation/). This static frontend uses fictional data and browser-only simulated execution.
+
 以独立站 EDM 为首期主线的可点击营销工作台，采用虚构 **Vela Studio / K75 机械键盘**新品活动。活动配置、准备、人工审核、执行追踪、Blog 与商品上架预览使用同一份产品与优惠上下文。
 
 **本仓库是前端原型和团队 BlogGenerator 的安全发布副本。** 主界面采用正式产品风格；通过右上角 **About this demo** 查看英文说明与能力边界。品牌、键盘规格、价格、库存、人群、预约、发送、限流和回执均为示例。本原型不连接后端、不调用模型、不发送邮件。静态网站范围与部署证据见 [deployment.md](docs/deployment.md) 和 [verification.md](docs/verification.md)。

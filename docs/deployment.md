@@ -1,5 +1,7 @@
 # Static Frontend Deployment
 
+Live site: [Relay Marketing Workspace](https://christinesbt.github.io/marketing-automation/).
+
 GitHub Pages publishes only the fictional Relay / Vela K75 frontend. The repository also holds documentation and a separate BlogGenerator source copy; those files are excluded from the website artifact.
 
 ## Build and Local Preview
