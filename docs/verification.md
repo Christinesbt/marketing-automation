@@ -40,7 +40,7 @@
 
 ## 截图证据
 
-这些截图只包含虚构数据和本地界面。已将预览重置到初始总览方便下一次演示。
+这些截图只包含虚构数据，已替换为英文修订后的实际浏览器截图。隔离测试地址已重置；用户的本机工作区缓存未为测试而重置。
 
 ![活动总览](screenshots/campaigns-overview.jpg)
 
@@ -61,3 +61,22 @@
 ## 未验证范围
 
 真实独立站、邮件 API、送达/退信、模型质量、服务端一致性、多用户权限和源 EDM 的生产门禁不在本次测试范围。未访问生产服务，未调用模型，未发送邮件。源 EDM 最新知识库只读参考见 [capabilities.md](capabilities.md)。
+
+## English UI Revision — 6 October 2026
+
+- Syntax checks passed; tests passed **19/19**, including the original 12 state tests, six language/storage/UTC/formatting/source checks and one Pages artifact-scope test.
+- Source checks found no CJK/full-width text in shipped HTML, JavaScript, CSS, SVG or seeded state. Visible DOM, input values, placeholders, titles and accessibility labels were checked throughout the browser flow. Chinese documentation and standalone BlogGenerator support are outside this UI revision.
+- Console headings use title case; prose and actions use sentence case. British English dates include the year, UTC inputs use YYYY-MM-DD HH:mm, numbers use grouping, and prices display US$129. Impossible dates were rejected. Content and revision forms use application-controlled English validation, avoiding OS-language native validation bubbles.
+- On an isolated origin (127.0.0.1:4174), a genuine old-UI Chinese draft was created before upgrading. The upgraded UI held it behind an English review screen. Cancel and reload retained the original workspace; explicit confirmation backed it up before opening English seeds. About offered the saved backup, and it survived reset. Unit tests verified exact raw JSON preservation and append-only backup history. The browser accepted the download request; this tooling did not confirm the final download-directory landing.
+- Browser validation repeated blank brief and invalid date errors, out-of-stock blocking and corrected preparation, preparation refresh/resume, disabled unapproved execution, edit cancellation, empty subject validation, duplicate approval, editing v1 to v2 and revoking approval, empty revision-note validation, return/resave/reapproval to v3, reservation cancellation, repeated run start, execution refresh/resume, repeated retry and refresh during backoff, reconciliation, and campaign isolation.
+- The manual campaign reached **760 acknowledged / 60 failed / 40 uncertain**, then **820 / 0 / 40**, then **860 / 0 / 0** without resending uncertain records. A separate six-step English walkthrough completed preparation, human approval, reservation, execution, safe retry and reconciliation. These are fictional scripted outcomes.
+- Reset cancellation retained completed work; confirmed reset and reload restored exactly three seed campaigns. The migrated legacy backup remained available. The user's separate local-preview storage was not reset for QA.
+- Narrow-screen review, content dialog and About were checked at 390×844 and 375×812 (actual content widths 375 and 360). Scroll width equalled client width in every checked layout. Product images loaded; final browser error/warning logs were empty. Temporary viewport overrides were removed.
+
+### Additional Evidence
+
+![English legacy workspace review](screenshots/language-review.jpg)
+
+![English capability boundaries](screenshots/about-demo.jpg)
+
+Public deployment verification is appended only after the actual Pages deployment succeeds.

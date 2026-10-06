@@ -39,3 +39,7 @@ Amazon/TikTok 属于后续渠道适配。必须先确认平台权限、内容规
 ## 成功标准
 
 本阶段验收的是用户能否顺畅走完活动、理解准备结果、发现审批版本变化、处理失败和未知结果，并能重复演示。它不证明真实邮件送达、商业转化率或跨平台接入成功。
+
+## Tech300 Business Context
+
+The Tech300 venture is a cross-border AI consulting and solutions business. This marketing automation console is one project within that broader offering. Its EDM-first scope demonstrates a specific operational workflow; it does not represent the entire company or its full consulting service. The current frontend remains focused on marketing operations.

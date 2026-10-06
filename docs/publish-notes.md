@@ -1,10 +1,10 @@
 # 提交范围与来源
 
-目标是用户指定的已有私有仓库 [Christinesbt/marketing-automation](https://github.com/Christinesbt/marketing-automation)。发布前核对为空仓库、私有可见性、具有 push 权限。仅正常首次推送 `main`；不 force、不合并、不改变可见性，不部署网站。
+目标是用户指定的已有仓库 [Christinesbt/marketing-automation](https://github.com/Christinesbt/marketing-automation)。首次提交时核对为空仓库、私有可见性、具有 push 权限。后续用户自行设为公开，并明确授权发布英文静态前端。只正常推送 `main`，不 force，不改变可见性。网站采用官方 GitHub Pages 工作流，范围见 [deployment.md](deployment.md)。
 
 ## 文件范围
 
-- `marketing-console-prototype/`：独立纯前端、本机静态服务器、12 项离线状态测试、原创键盘 SVG 和生成脚本。
+- `marketing-console-prototype/`：独立纯前端、本机静态服务器、19 项离线测试、原创键盘 SVG 和生成脚本。
 - `blog-generator/`：团队提供的 Blog + EDM Python 程序的最小安全整理版本，说明、依赖列表和空白环境变量示例。
 - `docs/`：重新整理的产品、架构、能力分层、路线图、真实检查记录和仅有虚构数据的截图。
 - `README.md` / `.gitignore`：启动方式、范围与排除规则。
@@ -25,4 +25,4 @@
 
 ## 发布核对
 
-提交前执行语法、12 项状态测试、Python AST、文本/文件清单扫描、相对文档链接和源文件指纹检查。扫描关注高可信凭据格式、非本机 IP/模型地址、个人绝对路径、禁止的二进制/缓存文件及硬编码认证值；扫描通过不代替人工逐类审阅。Git 只暂存本交付的明确路径，检查 staged 清单与 diff。推送结果和远端 SHA 由交付回复提供；本仓库没有 CI 工作流，不把本地检查称为 GitHub CI。
+首次提交前执行语法、12 项状态测试、Python AST、文本/文件清单扫描、相对文档链接和源文件指纹检查。英文修订后的本地测试为 19 项。扫描关注高可信凭据格式、非本机 IP/模型地址、个人绝对路径、禁止的二进制/缓存文件及硬编码认证值；扫描通过不代替人工逐类审阅。Git 只暂存本交付的明确路径，检查 staged 清单与 diff。新增 GitHub Actions 工作流会先检查和测试，再仅发布 12 个允许的静态文件；实际 CI、部署 URL 和提交版本由验收记录提供，不把本地测试或单纯 push 称为部署成功。

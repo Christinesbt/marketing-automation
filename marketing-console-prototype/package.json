@@ -4,6 +4,12 @@
   "private": true,
   "type": "module",
   "description": "Local-only Tech300 EDM workflow prototype with fictional data",
-  "scripts": { "start": "node server.mjs", "test": "node --test tests/state.test.mjs", "check": "node --check app.js && node --check state.js && node --check server.mjs" },
-  "engines": { "node": ">=20" }
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check app.js && node --check state.js && node --check format.js && node --check language.js && node --check server.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
 }

@@ -4,7 +4,7 @@ import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 const root = path.dirname(fileURLToPath(import.meta.url));
 const port = Number(process.env.PORT || 4173);
-const files = new Set(['index.html','app.js','state.js','styles.css','keyboard-styles.css','assets/keyboard-graphite.svg','assets/keyboard-cloud.svg','assets/keyboard-moss.svg']);
+const files = new Set(['index.html','app.js','state.js','format.js','language.js','styles.css','keyboard-styles.css','assets/keyboard-graphite.svg','assets/keyboard-cloud.svg','assets/keyboard-moss.svg']);
 const types = {'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml'};
 const server = http.createServer(async (req,res) => {
   const filename = new URL(req.url, 'http://localhost').pathname.replace(/^\//,'') || 'index.html';

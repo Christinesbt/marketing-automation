@@ -24,7 +24,7 @@ test('preparation pause and refresh resume at the saved step without duplication
   let c=newCampaign('c1');transition(c,'startPrep');transition(c,'prepTick');
   const s=seedState();s.campaigns=[c];c=restore(JSON.stringify(s)).campaigns[0];assert.equal(c.status,'prep_paused');assert.equal(c.prep.step,1);
   assert.equal(transition(c,'prepTick').ok,false);transition(c,'startPrep');for(let i=0;i<3;i++)transition(c,'prepTick');
-  assert.equal(c.prep.step,4);assert.equal(c.audit.filter(x=>x.type==='Validate source data').length,1);
+  assert.equal(c.prep.step,4);assert.equal(c.audit.filter(x=>x.type==='Validate Source Data').length,1);
 });
 test('saving a revision cancels approval and reservation',()=>{
   const c=newCampaign('c1');prepare(c);approve(c);transition(c,'schedule');

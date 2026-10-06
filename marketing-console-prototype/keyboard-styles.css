@@ -8,3 +8,6 @@
 
 .table-scroll{position:relative}
 @media(max-width:600px){.topbar{gap:8px}.top-left{min-width:0}.top-left>strong{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.top-actions{flex-shrink:0;gap:3px}.top-actions .btn{font-size:0;width:34px;height:34px;gap:0;padding:8px}.top-actions .btn svg{width:17px;height:17px;flex-shrink:0}}
+
+.language-gate{padding:30px;max-width:850px}.language-gate h2{font-size:22px;margin-bottom:14px}.language-gate p{font-size:14px;line-height:1.8;color:var(--muted)}.language-gate .send-actions{margin:24px 0;flex-wrap:wrap}.language-gate .small-note{font-size:12px}
+@media(max-width:600px){.language-gate{padding:22px}.language-gate h2{font-size:20px}.language-gate .send-actions .btn{width:100%}.audit-event time{white-space:normal}.step small{line-height:1.4}}

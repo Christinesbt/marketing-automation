@@ -18,3 +18,7 @@
 从一个真实连接器的小闭环起步，避免同时做所有渠道。先复用已有 EDM 的状态机、幂等和恢复经验；源项目专用配置与代码复用需另行确认授权，不能直接整仓迁入。
 
 后续可补营销指标与人工复盘，但没有真实观察窗口时不展示 ROI/转化率成果。本原型的聚合数字不是业务基线，也不构成产品效果承诺。
+
+## Venture and Project Scope
+
+The roadmap above describes the marketing automation project. The Tech300 application is for the broader cross-border AI consulting and solutions business; consulting delivery and other solution projects are separate from this console's roadmap. This revision does not add a consulting workflow to the frontend.

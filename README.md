@@ -2,7 +2,7 @@
 
 以独立站 EDM 为首期主线的可点击营销工作台，采用虚构 **Vela Studio / K75 机械键盘**新品活动。活动配置、准备、人工审核、执行追踪、Blog 与商品上架预览使用同一份产品与优惠上下文。
 
-**本仓库是前端原型和团队 BlogGenerator 的安全发布副本。** 主界面采用正式产品风格；通过右上角 **About this demo / 关于此演示**查看数据与能力边界。品牌、键盘规格、价格、库存、人群、预约、发送、限流和回执均为示例。本原型不连接后端、不调用模型、不发送邮件。本次没有部署网站。
+**本仓库是前端原型和团队 BlogGenerator 的安全发布副本。** 主界面采用正式产品风格；通过右上角 **About this demo** 查看英文说明与能力边界。品牌、键盘规格、价格、库存、人群、预约、发送、限流和回执均为示例。本原型不连接后端、不调用模型、不发送邮件。静态网站范围与部署证据见 [deployment.md](docs/deployment.md) 和 [verification.md](docs/verification.md)。
 
 ## 本地启动
 
@@ -59,4 +59,12 @@ npm test
 
 Python 副本只做语法/AST 静态检查，本次未安装模型依赖、未运行 Streamlit、未下载 embedding 模型、未连接 Ollama。之后要单独使用它，请先阅读 [BlogGenerator 使用说明](blog-generator/README.md)。
 
-源 EDM 项目仅作为经授权的通用架构参考；未迁入其企业配置、客户数据、凭据、缓存或生产源码。视频及原始 ZIP 不进入 Git。没有更改目标仓库的私有可见性。
+源 EDM 项目仅作为经授权的通用架构参考；未迁入其企业配置、客户数据、凭据、缓存或生产源码。视频及原始 ZIP 不进入 Git。仓库由用户设为公开，本次工作没有修改可见性。
+
+## English UI Update
+
+The frontend, accessibility labels, dialogs, validation, guided tour, audit events and generated sample content are in English. Console headings use title case; prose and actions use sentence case. Dates use British English, a four-digit year and UTC; prices explicitly use US dollars. Chinese documentation and the separate BlogGenerator's Chinese support remain available.
+
+Legacy saved Chinese edits are never silently discarded. An English review screen offers an original workspace download and requires explicit confirmation before saving an exact backup and starting the English demo. The backup survives normal resets and remains downloadable from About This Demo.
+
+Frontend validation includes 19 passing tests: the original 12 state tests, six language/storage/formatting tests and one static deployment-scope test.

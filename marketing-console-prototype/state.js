@@ -1,3 +1,5 @@
+import {hasNonEnglishText} from './language.js';
+import {shortDate,number} from './format.js';
 export const STORAGE_KEY='relay-tech300-keyboard-demo-v2';
 export const products=[
   {id:'p1',name:'Vela K75 · Graphite',sku:'VEL-K75-GR',price:129,stock:180,category:'75% mechanical keyboard',facts:['75% compact layout','Hot-swappable switches','USB-C wired connection'],color:'graphite',image:'assets/keyboard-graphite.svg'},
@@ -10,28 +12,29 @@ export const audiences={
   winback:{name:'Customers to re-engage',base:920,unsubscribed:140,duplicates:40,frequency:100,eligible:640,note:'No purchase in 120 days; active marketing consent.'}
 };
 export const preparationSteps=[
-  {title:'Validate source data',note:'Check stock, product facts, offer and campaign dates.'},
-  {title:'Build eligible audience',note:'Exclude unsubscribed, duplicate and frequency-capped records.'},
-  {title:'Prepare content & artwork',note:'Prepare a K75 launch email and match the selected product artwork.'},
-  {title:'Review factual claims',note:'Match price, offer and attributes to the product catalogue.'}
+  {title:'Validate Source Data',note:'Check stock, product facts, offer and campaign dates.'},
+  {title:'Build the Eligible Audience',note:'Exclude unsubscribed, duplicate and frequency-capped records.'},
+  {title:'Prepare Content and Artwork',note:'Prepare a K75 launch email and match the selected product artwork.'},
+  {title:'Review Factual Claims',note:'Match price, offer and attributes to the product catalogue.'}
 ];
 export const lockedStatuses=['running','delivery_paused','retry_wait','needs_attention','completed'];
 const time=()=>new Date().toISOString();
 function future(hours){const d=new Date(Date.now()+hours*3600000);return d.toISOString().slice(0,16);}
-export function defaultBrief(){return {name:'K75 launch · Early access',productIds:['p1','p2'],goal:'Product discovery',audience:'engaged',discount:15,code:'K75LAUNCH',start:future(24),end:future(24*8)};}
+export function defaultBrief(){return {name:'K75 Launch · Early Access',productIds:['p1','p2'],goal:'Product discovery',audience:'engaged',discount:15,code:'K75LAUNCH',start:future(24),end:future(24*8)};}
 export function contentFor(c){const names=c.brief.productIds.map(id=>products.find(p=>p.id===id)?.name).filter(Boolean).join(' and ');return {subject:`Meet the K75. Find your rhythm — ${c.brief.discount}% off`,preheader:`A compact keyboard for your everyday desk. Use ${c.brief.code}.`,headline:'Your desk. Your rhythm.',body:`Meet ${names||'the Vela K75'}. A 75% compact layout keeps your desk focused, with hot-swappable switches and a USB-C wired connection. Choose the colour that feels like you. Enjoy ${c.brief.discount}% off with code ${c.brief.code} during this campaign. `,cta:'Discover Vela K75',artwork:'slate'};}
 export function event(c,type,detail){c.audit.unshift({id:`${c.id}-e${c.audit.length+1}`,at:time(),type,detail});}
 export function newCampaign(id,brief=defaultBrief()){return {id,brief:{...brief,productIds:[...brief.productIds]},status:'draft',revision:0,approvedRevision:null,content:null,prep:{step:0,error:null},delivery:null,returned:false,audit:[{id:`${id}-e1`,at:time(),type:'Draft created',detail:'Local fictional campaign. No external action.'}],created:time()};}
 export function seedState(){
   const a=newCampaign('c-autumn');
-  const b=newCampaign('c-welcome',{...defaultBrief(),name:'K75 · Welcome collection',productIds:['p2'],discount:10,code:'WELCOME10',audience:'vip',start:future(-72),end:future(-24)});
+  const b=newCampaign('c-welcome',{...defaultBrief(),name:'K75 · Welcome Collection',productIds:['p2'],discount:10,code:'WELCOME10',audience:'vip',start:future(-72),end:future(-24)});
   b.status='completed';b.prep.step=4;b.revision=1;b.content=contentFor(b);b.approvedRevision=1;
   b.delivery={sent:480,failed:0,unknown:0,queued:0,total:480,stage:4,attempt:1,retryAt:null,runId:'SIM-WELCOME',reconciled:true};
   event(b,'Sample execution completed','Seeded fictional result: 480 simulated deliveries. Not a production outcome.');
-  const c=newCampaign('c-ritual',{...defaultBrief(),name:'Cloud edition · Desk refresh',productIds:['p2'],audience:'winback',discount:12,code:'CLOUD12'});
+  const c=newCampaign('c-ritual',{...defaultBrief(),name:'Cloud Edition · Desk Refresh',productIds:['p2'],audience:'winback',discount:12,code:'CLOUD12'});
   c.status='review';c.prep.step=4;c.revision=1;c.content=contentFor(c);event(c,'Sample content prepared','Local sample template v1 is ready for human review.');
   return {schema:2,campaigns:[a,c,b],guide:null,serial:4};
 }
+export function parseUtcInput(value){if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(value))return NaN;const d=new Date(value+'Z');return !Number.isNaN(d.getTime())&&d.toISOString().slice(0,16)===value?d.getTime():NaN;}
 export function validateBrief(b,now=Date.now()){
   const e={};if(!b.name?.trim())e.name='Enter a campaign name.';
   if(b.name?.length>80)e.name='Keep the name under 80 characters.';
@@ -40,9 +43,10 @@ export function validateBrief(b,now=Date.now()){
   if(!audiences[b.audience])e.audience='Choose an audience.';
   if(!Number.isFinite(Number(b.discount))||Number(b.discount)<1||Number(b.discount)>50)e.discount='Use an offer between 1% and 50%.';
   if(!/^[A-Z0-9_-]{3,20}$/.test(b.code||''))e.code='Use 3–20 uppercase letters, numbers, _ or -.';
-  const start=Date.parse(b.start+'Z'),end=Date.parse(b.end+'Z');
-  if(!Number.isFinite(start)||start<=now)e.start='Choose a future start time (UTC).';
-  if(!Number.isFinite(end)||end<=start)e.end='Offer end must be after the start.';
+  if(hasNonEnglishText(b.name))e.name='Use English text for the campaign name.';
+  const start=parseUtcInput(b.start),end=parseUtcInput(b.end);
+  if(!Number.isFinite(start)||start<=now)e.start='Enter a future UTC start time as YYYY-MM-DD HH:mm.';
+  if(!Number.isFinite(end)||end<=start)e.end='Enter a valid UTC end time after the start (YYYY-MM-DD HH:mm).';
   return e;
 }
 export function approveReady(c){return c.content&&c.prep.step===4&&!c.returned&&c.revision===c.approvedRevision;}
@@ -63,7 +67,7 @@ export function transition(c,action,payload={}){
     case 'prepTick':{
       if(c.status!=='preparing')return fail('Preparation is not running.');
       if(c.prep.step===0){const p=products.find(p=>c.brief.productIds.includes(p.id)&&p.stock===0);if(p){c.status='prep_error';c.prep.error=`${p.name} has no stock in the sample catalogue. Remove it from the brief and prepare again.`;event(c,'Data check blocked',c.prep.error);return pass('Source validation needs attention.');}}
-      const step=c.prep.step;c.prep.step++;event(c,preparationSteps[step].title,step===1?`${audiences[c.brief.audience].eligible} eligible aggregate records; no personal data.`:preparationSteps[step].note);
+      const step=c.prep.step;c.prep.step++;event(c,preparationSteps[step].title,step===1?`${number(audiences[c.brief.audience].eligible)} eligible aggregate records; no personal data.`:preparationSteps[step].note);
       if(c.prep.step===4){c.content=contentFor(c);c.revision++;c.status='review';c.approvedRevision=null;event(c,'Review requested',`Sample content v${c.revision} requires human approval.`);}return pass('Preparation step complete.');
     }
     case 'pausePrep':if(c.status!=='preparing')return fail('Nothing to pause.');c.status='prep_paused';event(c,'Preparation paused','Progress preserved locally; resume explicitly.');return pass('Preparation paused.');
@@ -71,6 +75,7 @@ export function transition(c,action,payload={}){
       if(!['review','approved','scheduled'].includes(c.status))return fail('Content is not editable in this stage.');
       if(['subject','preheader','headline','body','cta'].some(k=>!payload.content?.[k]?.trim()))return fail('Complete every content field.');
       if(!['slate','horizon'].includes(payload.content.artwork))return fail('Choose a sample artwork.');
+      if(hasNonEnglishText(payload.content))return fail('Use English text in every content field. Your draft has not been saved.');
       const approved=c.approvedRevision!==null;c.content={...payload.content};c.revision++;c.approvedRevision=null;c.status='review';c.returned=false;
       event(c,'Content revised',`v${c.revision} saved. ${approved?'Old approval and reservation cancelled.':'A new human approval is required.'}`);return pass('Revision saved. Approval required again.');
     }
@@ -81,11 +86,12 @@ export function transition(c,action,payload={}){
     case 'return':
       if(!['review','approved','scheduled'].includes(c.status))return fail('Content is not available for review.');
       if(!payload.note?.trim())return fail('Add a revision note.');
+      if(hasNonEnglishText(payload.note))return fail('Use English text for the revision note.');
       c.approvedRevision=null;c.status='review';c.returned=true;event(c,'Returned for revision',payload.note.trim());return pass('Returned. Save a revision before approval.');
     case 'schedule':
       if(c.status!=='approved'||!approveReady(c))return fail('Current content must be approved first.');
       if(Date.parse(c.brief.start+'Z')<=Date.now())return fail('The start time has passed. Update the brief.');
-      c.status='scheduled';event(c,'Reservation simulated',`Reserved ${c.brief.start} UTC. No background sender exists; explicit simulation required.`);return pass('Simulation reserved. No real email is scheduled.');
+      c.status='scheduled';event(c,'Reservation simulated',`Reserved ${shortDate(c.brief.start)} UTC. No background sender exists; explicit simulation required.`);return pass('Simulation reserved. No real email is scheduled.');
     case 'cancelSchedule':if(c.status!=='scheduled')return fail('No reservation to cancel.');c.status='approved';event(c,'Reservation cancelled','The content approval remains valid.');return pass('Reservation cancelled.');
     case 'startSend':{
       if(!['approved','scheduled'].includes(c.status)||!approveReady(c))return fail('Sending is blocked until the current version is approved.');
